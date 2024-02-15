@@ -1,30 +1,35 @@
-const fs = require('fs');
+const fs = require('fs').promises;
 
 class ProductManager {
     constructor(filePath) {
         this.path = filePath;
-        this.products = this.loadProducts();
+        this.products = [];
+        this.loadProducts().then((data) => {
+            this.products = data;
+        }).catch((error) => {
+            console.error(`Error loading products: ${error.message}`);
+        });
     }
 
-    loadProducts() {
+    async loadProducts() {
         try {
-            const data = fs.readFileSync(this.path, 'utf8');
+            const data = await fs.readFile(this.path, 'utf8');
             return JSON.parse(data);
         } catch (error) {
             return [];
         }
     }
 
-    saveProducts() {
+    async saveProducts() {
         const data = JSON.stringify(this.products, null, 2);
-        fs.writeFileSync(this.path, data);
+        await fs.writeFile(this.path, data);
     }
 
     generateId() {
         return this.products.length > 0 ? Math.max(...this.products.map(product => product.id)) + 1 : 1;
     }
 
-    addProduct = (newProduct) => {
+    async addProduct(newProduct) {
         if (!newProduct.title || !newProduct.description || !newProduct.price || !newProduct.thumbnail || !newProduct.code || !newProduct.stock) {
             throw new Error("Faltan datos");
         }
@@ -48,14 +53,14 @@ class ProductManager {
         };
 
         this.products.push(product);
-        this.saveProducts();
+        await this.saveProducts();
     }
 
-    getProducts() {
+    async getProducts() {
         return this.products;
     }
 
-    getProductById(id) {
+    async getProductById(id) {
         const product = this.products.find(product => product.id === id);
         if (!product) {
             throw new Error(`No existe el producto con el id ${id}`);
@@ -63,36 +68,36 @@ class ProductManager {
         return product;
     }
 
-    updateProduct(id, updatedProduct) {
+    async updateProduct(id, updatedProduct) {
         const index = this.products.findIndex(product => product.id === id);
         if (index === -1) {
             throw new Error(`No existe el producto con el id ${id}`);
         }
 
         this.products[index] = { ...this.products[index], ...updatedProduct };
-        this.saveProducts();
+        await this.saveProducts();
     }
 
-    deleteProduct(id) {
+    async deleteProduct(id) {
         const index = this.products.findIndex(product => product.id === id);
         if (index === -1) {
             throw new Error(`No existe el producto con el id ${id}`);
         }
 
         this.products.splice(index, 1);
-        this.saveProducts();
+        await this.saveProducts();
     }
 }
 
-const products = new ProductManager('productos.json');
+module.exports = ProductManager;
 
 // ************************************
 // products.addProduct({
-//     title: "producto de prueba",
-//     description: "Este es un producto prueba",
-//     price: 200,
+//     title: "Zapatilla 02",
+//     description: "Esta es la zapatilla 02",
+//     price: 210,
 //     thumbnail: "Sin imagen",
-//     code: "1",
+//     code: "2",
 //     stock: 25
 // });
 
