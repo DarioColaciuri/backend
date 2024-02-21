@@ -1,0 +1,24 @@
+[
+  {
+    "id": 1,
+    "title": "asdasdasd",
+    "description": "asdasd",
+    "code": "12",
+    "price": 3,
+    "status": true,
+    "stock": 2,
+    "category": "",
+    "thumbnails": []
+  },
+  {
+    "id": 2,
+    "title": "asd",
+    "description": "asd2",
+    "code": "13",
+    "price": 4,
+    "status": true,
+    "stock": 3,
+    "category": "prueba",
+    "thumbnails": []
+  }
+]

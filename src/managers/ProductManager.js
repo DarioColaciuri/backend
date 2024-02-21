@@ -30,7 +30,7 @@ class ProductManager {
     }
 
     async addProduct(newProduct) {
-        if (!newProduct.title || !newProduct.description || !newProduct.price || !newProduct.thumbnail || !newProduct.code || !newProduct.stock) {
+        if (!newProduct.title || !newProduct.description || !newProduct.price || !newProduct.code || !newProduct.stock) {
             throw new Error("Faltan datos");
         }
 
@@ -46,10 +46,12 @@ class ProductManager {
             id: this.generateId(),
             title: newProduct.title,
             description: newProduct.description,
-            price: newProduct.price,
-            thumbnail: newProduct.thumbnail,
             code: newProduct.code,
-            stock: newProduct.stock
+            price: newProduct.price,
+            status: true, 
+            stock: newProduct.stock,
+            category: newProduct.category || "",  
+            thumbnails: newProduct.thumbnails || []
         };
 
         this.products.push(product);
@@ -73,7 +75,11 @@ class ProductManager {
         if (index === -1) {
             throw new Error(`No existe el producto con el id ${id}`);
         }
-
+    
+        if (updatedProduct.id && updatedProduct.id !== id) {
+            throw new Error(`No se puede modificar el campo 'id'`);
+        }
+    
         this.products[index] = { ...this.products[index], ...updatedProduct };
         await this.saveProducts();
     }
