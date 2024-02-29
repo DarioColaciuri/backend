@@ -1,8 +1,8 @@
-const express = require('express');
-const { join } = require('path');
+import express from 'express';
+import { routes } from '../utils.js';
 const router = express.Router();
-const CartManager = require('../managers/CartManager');
-let rutaCarts = join(__dirname, '..', 'data', 'carts.json');
+import CartManager from '../managers/CartManager.js';
+let rutaCarts = routes.carts;
 const carts = new CartManager(rutaCarts);
 
 router.get("/", async (req, res) => {
@@ -45,4 +45,4 @@ router.post("/:cid/product/:pid", async (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;

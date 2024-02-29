@@ -1,4 +1,4 @@
-const fs = require('fs').promises;
+import { promises as fs } from 'fs';
 // const { join } = require('path');
 // let rutaCarts = join(__dirname, '..', 'data', 'carts.json');
 
@@ -75,7 +75,7 @@ class CartManager {
     }
 }
 
-module.exports = CartManager;
+export default CartManager;
 
 
 // const carts = new CartManager(rutaCarts);

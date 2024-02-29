@@ -1,0 +1,187 @@
+body {
+    background-color: #E0E0E2;
+}
+
+.container-general {
+    display: flex;
+    flex-direction: column;
+}
+
+.container-formularios {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-bottom: 2rem;
+}
+
+i {
+    color: #7389AE;
+}
+
+.container-formularios {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.container-form {
+    background: linear-gradient(135deg, #416788, #7389AE); 
+    padding: 2rem;
+    border-radius: 20px;
+    color: #fff; 
+}
+
+.container-eliminar {
+    background: linear-gradient(135deg, #416788, #7389AE); 
+    padding: 2rem;
+    border-radius: 20px;
+    color: #fff; 
+}
+
+.titulo {
+    font-family: "Kanit", sans-serif;
+    text-align: center;
+}
+
+.container-lista {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.card {
+    font-family: "Josefin Sans", sans-serif;
+    display: flex;
+    flex-direction: column;
+    border: none;
+    min-width: 20rem;
+    max-width: 20rem;
+    border-radius: 20px;
+    transition: transform 0.3s;
+    background: linear-gradient(135deg, #416788, #7389AE); 
+    color: #fff; 
+}
+
+.card-title {
+    text-align: center;
+}
+
+ul {
+    list-style: none;
+}
+
+.titulo-formularios {
+    font-family: "Josefin Sans", sans-serif;
+    text-align: center;
+}
+
+.card-header-code {
+    text-align: center;
+    background-color: #81D2C7; 
+    padding: .3rem;
+    border-radius: 20px 20px 0px 0px;
+    color: #181818; 
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.container-eliminar-btn, .container-registrar-btn {
+    display: flex;
+    justify-content: center;
+}
+
+.eliminar-btn {
+    background-color: #81D2C7;
+    border: none;
+    border-radius: 20px;
+    padding: .3rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    transition: ease-in 0.3s;
+    font-size: 1.5rem;
+}
+
+.eliminar-formulario-btn {
+    background-color: #81D2C7;
+    border: none;
+    border-radius: 20px;
+    padding: .3rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    transition: ease-in 0.3s;
+}
+
+.eliminar-formulario-btn:hover {
+    background-color: #abebe2;
+}
+
+.registrar-btn {
+    background-color: #81D2C7;
+    border: none;
+    border-radius: 20px;
+    padding: .3rem;
+    margin-top: 1rem;
+    cursor: pointer;
+    transition: ease-in 0.3s;
+}
+
+
+.registrar-btn:hover {
+    background-color: #abebe2;
+}
+
+.eliminar-btn:hover {
+    background-color: #abebe2;
+}
+
+.container-leftright {
+    font-family: "Josefin Sans", sans-serif;
+    display: flex;
+    align-items: center ;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+}
+
+.input-group-text {
+    background-color: #81D2C7;
+    padding: 4px;
+    align-items: center;
+    justify-content: center;
+    margin-top: .4rem;
+    margin-bottom: .4rem;
+    border-radius: 10px 0px 0px 10px;
+}
+
+.form-control {
+    height: 1.5rem;
+    border: none;
+    border-radius: 0px 10px 10px 0px;
+}
+
+.img-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.container-img {
+    margin: 1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.card-img {
+    max-width: 100px;
+}
+

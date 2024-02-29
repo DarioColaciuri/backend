@@ -1,8 +1,9 @@
-const express = require('express');
-const { join } = require('path');
+import express from 'express';
+import { routes } from '../utils.js';
 const router = express.Router();
-const ProductManager = require('../managers/ProductManager');
-let rutaProductos = join(__dirname, '..', 'data', 'productos.json');
+import ProductManager from '../managers/ProductManager.js';
+
+const rutaProductos = routes.products;
 const products = new ProductManager(rutaProductos);
 
 router.get("/", async (req, res) => {
@@ -56,4 +57,4 @@ router.delete("/:pid", async (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;
