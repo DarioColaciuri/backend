@@ -12,14 +12,14 @@ function updateProductList(productList) {
     let productosHTML = "";
   
     productList.forEach((product) => {
-      const thumbnailUrl = product.thumbnails.length > 0 ? product.thumbnails[0].url : 'https://img.freepik.com/vector-gratis/ilustracion-icono-galeria_53876-27002.jpg';
+      // const thumbnailUrl = product.thumbnails.length > 0 ? product.thumbnails[0].url : 'https://img.freepik.com/vector-gratis/ilustracion-icono-galeria_53876-27002.jpg';
         productosHTML += `
           <div class="card">
             <div class="card-header-code">code: ${product.code}</div>
               <div class="card-body">
                   <h4 class="card-title">${product.title}</h4>
                     <ul class="card-text">
-                      <li>id: ${product.id}</li>
+                      <li>id: ${product._id}</li>
                       <li>description: ${product.description}</li>
                       <li>price: $${product.price}</li>
                       <li>category: ${product.category}</li>
@@ -27,11 +27,11 @@ function updateProductList(productList) {
                       <li>stock: ${product.stock}</li>
                     </ul>
                     <div class="img-container">
-                      <img class="card-img" src="${thumbnailUrl}" alt="${product.title}">
+                      <img class="card-img" src="${product.thumbnail}" alt="${product.title}">
                     </div>
               </div>
               <div class="container-eliminar-btn">
-                <button type="button" class="eliminar-btn" onclick="deleteProduct(${product.id})"><i class="bi bi-trash"></i></button>
+                <button type="button" class="eliminar-btn" onclick="deleteProduct('${String(product._id)}')"><i class="bi bi-trash"></i></button>
               </div>
             </div>
           </div>
@@ -49,8 +49,7 @@ function updateProductList(productList) {
     let title = form.elements.title.value;
     let description = form.elements.description.value;
     let stock = form.elements.stock.value;
-    let thumbnailInput = form.elements.thumbnail.value;
-    let thumbnails = thumbnailInput.split(',').map(url => ({ url: url.trim() }));
+    let thumbnail = form.elements.thumbnail.value;
     let category = form.elements.category.value;
     let price = form.elements.price.value;
     let code = form.elements.code.value;
@@ -60,7 +59,7 @@ function updateProductList(productList) {
       title,
       description,
       stock,
-      thumbnails,
+      thumbnail,
       category,
       price,
       code,
@@ -73,7 +72,7 @@ function updateProductList(productList) {
 
 document.getElementById("delete-btn").addEventListener("click", function () {
     const deleteidinput = document.getElementById("id-prod");
-    const deleteid = parseInt(deleteidinput.value);
+    const deleteid = deleteidinput.value;
     socketClient.emit("deleteProduct", deleteid);
     deleteidinput.value = "";
   })

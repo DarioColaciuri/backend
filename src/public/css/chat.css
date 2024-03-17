@@ -1,0 +1,111 @@
+#chat-header {
+  display: flex;
+  align-items: center;
+  font-family: "Kanit", sans-serif;
+  justify-content: space-between;
+  background-color: #81d2c7;
+  color: black;
+  border-radius: 20px 20px 0px 0px;
+  padding: 10px 20px;
+}
+
+.sender-name {
+  font-family: "Josefin Sans", sans-serif;
+}
+
+#customer-service-logo {
+  max-width: 50px;
+  margin-left: 20px;
+}
+
+#chat-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background: linear-gradient(135deg, #416788, #7389ae);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+}
+
+#nombreusuario {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
+  margin: 0;
+}
+
+#chat-messages {
+  max-height: 400px;
+  overflow-y: scroll;
+  border: 1px solid #cccccc;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 0px 0px 20px 20px;
+  background: linear-gradient(135deg, #416788, #7389ae);
+}
+
+.message {
+  font-family: "Josefin Sans", sans-serif;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 70%;
+  background-color: #f0f0f0;
+  border-radius: 15px;
+  padding: 10px;
+}
+
+.message .sender-name {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.message.connect {
+  text-align: center;
+}
+
+#formulario {
+  display: flex;
+  align-items: center;
+  background-color: #81d2c7;
+  padding: 10px;
+  border: 1px solid #f0f0f0;
+  border-radius: 7px;
+}
+
+#mensaje {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+#formulario button {
+  font-family: "Josefin Sans", sans-serif;
+  background-color: #416788;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: ease 0.2s;
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+#formulario button:hover {
+  background-color: #7389ae;
+}
+
+.swal2-popup {
+  font-family: "Josefin Sans", sans-serif;
+  border-radius: 20px;
+  color: #f0f0f0;
+  background: linear-gradient(135deg, #416788, #7389ae);
+  border: solid 1px #f0f0f0;
+}
+

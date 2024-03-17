@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import ProductManager from '../managers/ProductManager.js';
+import ProductManager from '../dao/controllers/Mongo/productManagerMongo.js';
 import  __dirname  from "../utils.js"
 
-const products = new ProductManager(__dirname+'/data/productos.json')
+const products = new ProductManager()
 const vistasRouter = Router()
 
 
@@ -15,5 +15,8 @@ vistasRouter.get("/realtimeproducts",(req,res)=>{
 res.render("realTimeProducts")
 })
 
+vistasRouter.get("/chat",(req,res)=>{
+    res.render("chat")
+})
 
 export default vistasRouter

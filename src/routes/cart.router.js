@@ -1,13 +1,13 @@
 import express from 'express';
-import { routes } from '../utils.js';
+// import { routes } from '../utils.js';
 const router = express.Router();
-import CartManager from '../managers/CartManager.js';
-let rutaCarts = routes.carts;
-const carts = new CartManager(rutaCarts);
+import CartManager from '../dao/controllers/Mongo/cartManagerMongo.js';
+// let rutaCarts = routes.carts;
+const carts = new CartManager();
 
 router.get("/", async (req, res) => {
     try {
-        res.json({ carts: await carts.getAllCarts() });
+        res.json({ carts: await carts.getCarts() });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

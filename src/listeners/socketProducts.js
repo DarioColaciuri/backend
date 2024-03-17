@@ -1,4 +1,4 @@
-import ProductManager from "../managers/ProductManager.js";
+import ProductManager from "../dao/controllers/Mongo/productManagerMongo.js";
 import  __dirname  from "../utils.js";
 const products = new ProductManager(__dirname+'/data/productos.json')
 
@@ -20,7 +20,6 @@ const socketProducts = (socketServer) => {
                 const listadeproductos=await products.getProducts()
                 socketServer.emit("enviodeproducts",listadeproductos)
                 })
-        
     })
 };
 

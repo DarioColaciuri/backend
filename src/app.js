@@ -7,6 +7,8 @@ import productRouter from './routes/product.router.js';
 import cartRouter from './routes/cart.router.js';
 import vistasRouter from "./routes/vistas.router.js";
 import socketProducts from "./listeners/socketProducts.js";
+import socketChat from './listeners/socketChat.js';
+import connectToDB from "./dao/config/configServer.js";
 
 const PORT = 8080;
 const app = express();
@@ -24,6 +26,8 @@ app.use("/api/products", productRouter);
 app.use("/api/carts", cartRouter);
 app.use("/", vistasRouter)
 
+connectToDB()
+
 app.use((req, res) => {
     res.status(404).json({ error: "Ruta no encontrada" });
 });
@@ -35,6 +39,6 @@ const http = app.listen(PORT, () => {
 const io = new Server(http)
 
 socketProducts(io)
-
+socketChat(io)
 
 
