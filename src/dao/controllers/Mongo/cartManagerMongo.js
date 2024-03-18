@@ -12,7 +12,6 @@ class CartManager {
     };
 
     getCartById = async (cartId) => {
-
         try {
             const cart = await cartModel.findById(cartId)
             return cart;

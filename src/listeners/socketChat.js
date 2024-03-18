@@ -5,7 +5,7 @@ const messageManager = new MessageManager()
 const socketChat = (socketServer) => {
     socketServer.on('connection', async (socket) => {
         console.log("conectado usuario con id: " + socket.id)
-        
+
         socket.on("mensaje", async (info) => {
             await messageManager.createMessage(info);
             socketServer.emit("chat", await messageManager.getMessages());
@@ -13,6 +13,7 @@ const socketChat = (socketServer) => {
 
         socket.on("clearchat", async () => {
             await messageManager.deleteAllMessages();
+            socketServer.emit("chat", await messageManager.getMessages());
         });
 
         socket.on("nuevousuario", (usuario) => {

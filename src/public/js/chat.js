@@ -4,7 +4,7 @@ const formulario = document.getElementById("formulario")
 const inputmensaje = document.getElementById("mensaje")
 const chat = document.getElementById("chat")
 
-let usuario = null
+let usuario = null;
 
 if (!usuario) {
     Swal.fire({
@@ -37,7 +37,6 @@ formulario.onsubmit = (e) => {
         user: usuario,
         message: inputmensaje.value
     }
-    console.log(info)
     socketClient.emit("mensaje", info)
     inputmensaje.value = " "
     scrollToBottom()
@@ -68,3 +67,5 @@ document.getElementById("clearChat").addEventListener("click", () => {
     document.getElementById("chat").textContent = "";
     socketClient.emit("clearchat");
 });
+
+
