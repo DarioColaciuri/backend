@@ -10,17 +10,18 @@ import socketProducts from "./listeners/socketProducts.js";
 import socketChat from './listeners/socketChat.js';
 import connectToDB from "./dao/config/configServer.js";
 
+
 const PORT = 8080;
 const app = express();
 
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
-app.set('views', path.join(__dirname,'/views'));
+app.set('views', path.join(__dirname, '/views'));
 
 app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static(path.join(__dirname,'/public')));
+app.use(express.static(path.join(__dirname, '/public')));
 
 app.use("/api/products", productRouter);
 app.use("/api/carts", cartRouter);

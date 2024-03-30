@@ -16,7 +16,7 @@ const socketProducts = (socketServer) => {
             })
 
             socket.on("deleteProduct",async(id)=>{
-                await products.deleteProduct(id)
+                await products.deleteProduct(id) 
                 const listadeproductos=await products.getProducts()
                 socketServer.emit("enviodeproducts",listadeproductos)
                 })

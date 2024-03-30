@@ -10,6 +10,18 @@ export default class ProductManager {
         }
     }
 
+    getProductsFiltered = async (category = null) => {
+        try {
+            let filter = {}; 
+            if (category) {
+                filter.category = category;
+            }
+            return await productsModel.find(filter).lean();
+        } catch (err) {
+            return err;
+        }
+    }
+
     getProductById = async (id) => {
         try {
             return await productsModel.findById(id)
@@ -17,7 +29,6 @@ export default class ProductManager {
         } catch (err) {
             return { error: err.message }
         }
-
     }
 
     addProduct = async (product) => {

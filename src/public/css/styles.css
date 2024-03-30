@@ -70,6 +70,8 @@ i {
 
 ul {
     list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
 .titulo-formularios {
@@ -184,4 +186,97 @@ ul {
 .card-img {
     max-width: 100px;
 }
+
+.paginacion {
+    font-family: "Josefin Sans", sans-serif;
+    display: flex;
+    background-color: #416788;
+    border-radius: 20px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    gap: 3rem;
+    color: white;
+}
+
+.paginacion a {
+    color: white;
+}
+
+
+.paginacion-categorias {
+    font-family: "Josefin Sans", sans-serif;
+    display: flex;
+    background-color: #416788;
+    border-radius: 20px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    gap: 3rem;
+    color: white;
+}
+
+.paginacion-categorias a {
+    color: white;
+}
+
+.card-cart {
+    font-family: "Josefin Sans", sans-serif;
+    display: flex;
+    flex-direction: column;
+    border: none;
+    min-width: 30rem;
+    max-width: 30rem;
+    border-radius: 20px;
+    transition: transform 0.3s;
+    background: linear-gradient(135deg, #416788, #7389AE); 
+    color: #fff; 
+}
+
+.card-header-code-cart {
+    text-align: center;
+    background-color: #81D2C7; 
+    padding: .3rem;
+    border-radius: 20px 20px 0px 0px;
+    color: #181818; 
+}
+
+.card-cart:hover {
+    transform: scale(1.05);
+}
+
+.cart-precio {
+    display: flex;
+    justify-content: space-around;
+}
+
+.cart-product {
+    display: flex;
+    justify-content: space-around;
+}
+
+.cart-category {
+    text-align: center;
+}
+
+.card-img-cart {
+    max-width: 100px;
+}
+
+.card-img-container {
+    display: flex;
+    justify-content: center;
+}
+
+.cart-total {
+    text-align: center;
+}
+
+.icon {
+    color: black;
+    font-size: 1.5rem;
+}
+
 
