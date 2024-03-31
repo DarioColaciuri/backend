@@ -16,7 +16,7 @@ vistasRouter.get("/", async (req, res) => {
     }
 
     if (!limit) {
-        limit = 2;
+        limit = 6;
     }
 
     let filter = {};
@@ -64,18 +64,6 @@ vistasRouter.get("/", async (req, res) => {
         res.status(500).send("Error interno del servidor");
     }
 });
-
-// vistasRouter.get("/carts", async (req, res) => {
-//     try {
-//         let { docs: cart } = await cartModel.paginate({}, { lean: true });
-//         res.setHeader("Content-Type", "text/html");
-//         res.status(200).render("carts", {cart});
-
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).send("Error interno del servidor");
-//     }
-// });
 
 vistasRouter.get("/carts", async (req, res) => {
     try {

@@ -8,16 +8,6 @@ const router = express.Router();
 const rutaProductos = routes.products;
 const products = new ProductManager(rutaProductos);
 
-// router.get("/", async (req, res) => {
-//     try {
-//         let limit = req.query.limit;
-//         let productList = limit ? (await products.getProducts()).slice(0, limit) : await products.getProducts();
-//         res.json({ products: productList });
-//     } catch (error) {
-//         res.status(500).json({ error: error.message });
-//     }
-// });
-
 router.get("/", async (req, res) => {
     let { pagina, limit, query, sort } = req.query;
 
@@ -26,7 +16,7 @@ router.get("/", async (req, res) => {
     }
 
     if (!limit) {
-        limit = 2;
+        limit = 6;
     }
 
     let filter = {};

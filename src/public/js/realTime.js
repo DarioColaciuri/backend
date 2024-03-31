@@ -16,6 +16,7 @@ function updateProductList(productList) {
         productosHTML += `
           <div class="card">
             <div class="card-header-code">code: ${product.code}</div>
+            <div class="card-content">
               <div class="card-body">
                   <h4 class="card-title">${product.title}</h4>
                     <ul class="card-text">

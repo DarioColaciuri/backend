@@ -1,3 +1,4 @@
+
 body {
     background-color: #E0E0E2;
 }
@@ -58,9 +59,24 @@ i {
     border: none;
     min-width: 20rem;
     max-width: 20rem;
+    min-height: 20rem;
     border-radius: 20px;
     transition: transform 0.3s;
     background: linear-gradient(135deg, #416788, #7389AE); 
+    color: #fff; 
+}
+
+.card-content {
+    font-family: "Josefin Sans", sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    min-width: 20rem;
+    max-width: 20rem;
+    min-height: 20rem;
+    border-radius: 20px;
     color: #fff; 
 }
 
@@ -71,7 +87,7 @@ i {
 ul {
     list-style: none;
     margin: 0;
-    padding: 0;
+    /* padding: 0; */
 }
 
 .titulo-formularios {
@@ -233,6 +249,8 @@ ul {
     transition: transform 0.3s;
     background: linear-gradient(135deg, #416788, #7389AE); 
     color: #fff; 
+    margin-top: 1rem;
+    margin-bottom: 3rem;
 }
 
 .card-header-code-cart {
@@ -271,12 +289,86 @@ ul {
 }
 
 .cart-total {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     text-align: center;
+    background-color: #181818;
+    padding: 1rem;
+    border-radius: 0rem 0rem 1rem 1rem;
 }
 
 .icon {
     color: black;
     font-size: 1.5rem;
+}
+
+a {
+    text-decoration: none;
+}
+
+.agregar-btn {
+    background-color: #81D2C7;
+    border: none;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+    padding: .3rem;
+    cursor: pointer;
+    transition: ease-in 0.3s;
+    z-index: 99;
+}
+
+
+.agregar-btn:hover {
+    background-color: #abebe2;
+}
+
+.btn-container {
+    display: flex;
+    justify-content: center;
+    z-index: 98;
+}
+
+.cart-lista {
+    padding: 0;
+}
+
+.price {
+    text-align: center;
+}
+
+.list-product {
+    padding: 0;
+}
+
+.icono-price {
+    color: white;
+}
+
+.sort {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-sort {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.page {
+    font-weight: bolder;
+}
+
+.toast {
+    font-family: "Josefin Sans", sans-serif;
+}
+
+.card-list-text {
+    padding: 1rem;
 }
 
 

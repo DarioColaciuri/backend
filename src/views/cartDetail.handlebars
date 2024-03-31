@@ -2,7 +2,7 @@
 <div class="container-lista">
 
         <div class="card-cart">
-        <ul>
+        <ul class="cart-lista">
             <li>
             <p class="cart-category">Cantidad de categorias de productos:
                 {{cart.products.length}}</p>
@@ -25,7 +25,9 @@
                 </div>
                 <hr />
             {{/each}}
-            <p class="cart-total">Total: $ {{cartTotal}}</p>
+            <div class="cart-total">
+                <p>Total: $ {{cartTotal}}</p>
+            </div>
             </li>
         </ul>
         </div>
