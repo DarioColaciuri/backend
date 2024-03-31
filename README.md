@@ -19,8 +19,8 @@
 ###
 
 <p align="left">PORT: 8080</p>
-> [!NOTE]
-> Todos los productos estan siendo agregados de manera hardcodeada al carrito 6606e44a2a9123e93bac004f
+[!NOTE]
+Todos los productos estan siendo agregados de manera hardcodeada al carrito 6606e44a2a9123e93bac004f
 
 ###
 
