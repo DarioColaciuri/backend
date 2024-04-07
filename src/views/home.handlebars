@@ -1,16 +1,16 @@
 <div class="container-general">
   {{>navbar}}
   <div class="paginacion-categorias">
-    <a href="/?query=gorras">Gorras</a>
-    <a href="/?query=zapatillas">Zapatillas</a>
-    <a href="/?query=remeras">Remeras</a>
+    <a href="/products?query=gorras">Gorras</a>
+    <a href="/products?query=zapatillas">Zapatillas</a>
+    <a href="/products?query=remeras">Remeras</a>
     <div class="sort">
       <p>Sort by Price</p>
       <div class="btn-sort">
-        <a title="Ascendente" href="/?sort=asc"><i
+        <a title="Ascendente" href="/products?sort=asc"><i
             class="bi bi-caret-up-fill icono-price"
           ></i></a>
-        <a title="Descendente" href="/?sort=desc"><i
+        <a title="Descendente" href="/products?sort=desc"><i
             class="bi bi-caret-down-fill icono-price"
           ></i></a>
       </div>
@@ -59,23 +59,23 @@
   </div>
   <div class="paginacion">
     {{#if hasPrevPage}}
-      <a title="Primera pagina" href="/?pagina=1"><i
+      <a title="Primera pagina" href="/products/?pagina=1"><i
           class="bi bi-arrow-bar-left icono-price"
         ></i></a>
     {{/if}}
     {{#if hasPrevPage}}
-      <a title="Pagina anterior" href="/?pagina={{prevPage}}"><i
+      <a title="Pagina anterior" href="/products/?pagina={{prevPage}}"><i
           class="bi bi-arrow-left icono-price"
         ></i></a>
     {{/if}}
     <p class="page">Pagina {{page}}</p>
     {{#if hasNextPage}}
-      <a title="Pagina siguiente" href="/?pagina={{nextPage}}"><i
+      <a title="Pagina siguiente" href="/products/?pagina={{nextPage}}"><i
           class="bi bi-arrow-right icono-price"
         ></i></a>
     {{/if}}
     {{#if hasNextPage}}
-      <a title="Ultima pagina" href="/?pagina={{totalPages}}"><i
+      <a title="Ultima pagina" href="/products/?pagina={{totalPages}}"><i
           class="bi bi-arrow-bar-right icono-price"
         ></i></a>
     {{/if}}

@@ -101,13 +101,14 @@ vistasRouter.get("/carts/:cid", auth, admin, async (req, res) => {
     }
 });
 
-vistasRouter.get("/product/:pid", async (req, res) => {
+vistasRouter.get("/product/:pid", auth, async (req, res) => {
     try {
+        let usuario = req.session.usuario
         const isAdmin = usuario.rol === 'admin';
         const productId = req.params.pid;
         const product = JSON.parse(JSON.stringify(await products.getProductById(productId)));
         res.setHeader("Content-Type", "text/html");
-        res.status(200).render("productDetail", { product, isAdmin });
+        res.status(200).render("productDetail", { product, usuario, isAdmin });
     } catch (error) {
         console.error(error);
         res.status(500).send("No se encontro producto");
