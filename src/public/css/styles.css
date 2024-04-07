@@ -371,4 +371,64 @@ a {
     padding: 1rem;
 }
 
+.navbar {
+    font-family: "Josefin Sans", sans-serif;
+    display: flex;
+    gap: 4rem;
+    background: linear-gradient(135deg, #416788, #7389AE);
+    padding: 2rem;
+    color: white;
+    justify-content: end;
+}
+
+a {
+    color: white;
+}
+
+.user {
+    display: flex;
+    gap: 1rem;
+}
+
+.username {
+    color: black;
+}
+
+.container-login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+    /* place-content: center; */
+}
+
+.form-login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.submit {
+    padding: .4rem;
+    border-radius: 1rem;
+    background-color: #416788;
+    color: white;
+    cursor: pointer;
+    transition: ease 0.2s;
+}
+
+.submit:hover {
+    background-color: #7389AE;
+}
+
+.registrate-container {
+    font-family: "Josefin Sans", sans-serif;
+}
+
+.registrate {
+    color: #416788 ;
+}
+
 
