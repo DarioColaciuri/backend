@@ -12,6 +12,8 @@ import socketChat from './listeners/socketChat.js';
 import connectToDB from "./dao/config/configServer.js";
 import session from "express-session"
 import MongoStore from "connect-mongo"
+import passport from "passport";
+import { initializePassport } from "./dao/config/passport.config.js";
 
 const PORT = 8080;
 const app = express();
@@ -35,6 +37,10 @@ app.use(session(
         )
     }
 ))
+
+initializePassport();
+app.use(passport.initialize())
+app.use(passport.session()) 
 
 app.use(express.static(path.join(__dirname, '/public')));
 

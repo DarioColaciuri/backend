@@ -10,5 +10,8 @@ export const usersModel = mongoose.model('users', new mongoose.Schema({
         type: String,
         enum: ['admin', 'user'],
         default: 'user'
-    }
+    },
+    // {
+    //     timestamps: true, strict: false
+    // }
 }))
