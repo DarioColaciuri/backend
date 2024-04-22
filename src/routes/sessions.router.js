@@ -13,20 +13,7 @@ router.post('/register', passport.authenticate("register", { failureRedirect: "/
         return res.redirect("/register?error=Faltan datos")
     }
 
-    // let existe = await usuariosManager.getBy({ email })
-    // if (existe) {
-    //     console.log(existe)
-    //     return res.redirect(`/register?error=Ya existen usuarios con email ${email}`)
-    // }
-
-    // let rol = 'user';
-    // if (email === 'admincoder@coder.com') {
-    //     rol = 'admin';
-    // }
-    // password = creaHash(password)
-
     try {
-        // await usuariosManager.create({ username, email, password, rol })
         res.setHeader('Content-Type', 'application/json');
         res.redirect("http://localhost:8080/")
     } catch (error) {
@@ -110,4 +97,14 @@ router.get("/errorGitHub", (req, res) => {
     )
 
 })
+
+router.get("/current", (req, res) => {
+    if (req.session.usuario) {
+        res.setHeader("Content-Type", "application/json");
+        return res.status(200).json(req.session.usuario);
+    } else {
+        res.setHeader("Content-Type", "application/json");
+        return res.status(401).json({ error: "No hay usuario logueado" });
+    }
+});
 

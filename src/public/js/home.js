@@ -1,6 +1,7 @@
-function agregarAlCarrito(productoId) {
+function agregarAlCarrito(productoId, userCart) {
 
-    fetch('http://localhost:8080/api/carts/6606e44a2a9123e93bac004f/product/' + productoId + '/', {
+
+    fetch(`http://localhost:8080/api/carts/${userCart}/product/${productoId}/`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

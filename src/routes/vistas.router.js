@@ -13,6 +13,7 @@ vistasRouter.get("/products", auth, async (req, res) => {
     let { pagina, limit, query, sort } = req.query;
     let usuario = req.session.usuario
     const isAdmin = usuario.rol === 'admin';
+    const userCart = req.session.usuario.cart
 
     if (!pagina) {
         pagina = 1;
@@ -52,6 +53,7 @@ vistasRouter.get("/products", auth, async (req, res) => {
             status: "success",
             payload: listadeproductos,
             usuario,
+            userCart,
             isAdmin,
             totalPages,
             prevPage,
@@ -106,9 +108,10 @@ vistasRouter.get("/product/:pid", auth, async (req, res) => {
         let usuario = req.session.usuario
         const isAdmin = usuario.rol === 'admin';
         const productId = req.params.pid;
+        const userCart = req.session.usuario.cart
         const product = JSON.parse(JSON.stringify(await products.getProductById(productId)));
         res.setHeader("Content-Type", "text/html");
-        res.status(200).render("productDetail", { product, usuario, isAdmin });
+        res.status(200).render("productDetail", { product, usuario, isAdmin, userCart });
     } catch (error) {
         console.error(error);
         res.status(500).send("No se encontro producto");

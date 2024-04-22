@@ -2,8 +2,11 @@ import passport from "passport"
 import local from "passport-local"
 import github from "passport-github2"
 import { creaHash, validaPassword } from "../../utils.js"
+import CartManager from '../controllers/Mongo/cartManagerMongo.js';
 import { UsuariosManagerMongo } from '../controllers/Mongo/userManagerMongo.js';
 const usuariosManager = new UsuariosManagerMongo()
+
+
 
 export const initializePassport = () => {
 
@@ -60,8 +63,19 @@ export const initializePassport = () => {
                         rol = 'admin';
                     }
 
+                    const newCart = await new CartManager().createCart();
+                    const cartId = newCart._id.toString();
+
                     password = creaHash(password)
-                    let nuevoUsuario = await usuariosManager.create({ username, email, password, rol })
+                    let nuevoUsuario = await usuariosManager.create({
+                        username,
+                        email,
+                        password,
+                        first__name: req.body.first__name,
+                        last__name: req.body.last__name,
+                        age: req.body.age,
+                        cart: cartId,
+                        rol })
                     return done(null, nuevoUsuario)
 
                 } catch (error) {
