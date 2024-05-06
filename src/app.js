@@ -9,13 +9,14 @@ import vistasRouter from "./routes/vistas.router.js";
 import { router as sessionsRouter } from './routes/sessions.router.js';
 import socketProducts from "./listeners/socketProducts.js";
 import socketChat from './listeners/socketChat.js';
-import connectToDB from "./dao/config/configServer.js";
+import connectToDB from "./config/configServer.js"
 import session from "express-session"
 import MongoStore from "connect-mongo"
 import passport from "passport";
-import { initializePassport } from "./dao/config/passport.config.js";
+import { initializePassport } from "./config/passport.config.js";
+import { config } from "../src/config/config.js"
 
-const PORT = 8080;
+const PORT = config.PORT;
 const app = express();
 
 app.engine('handlebars', engine());
@@ -27,11 +28,11 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(session(
     {
-        secret: "CoderCoder123",
+        secret: config.SECRET,
         resave: true, saveUninitialized: true,
         store: MongoStore.create(
             {
-                mongoUrl: "mongodb+srv://dariocolaciuri:0303456@cluster0.ghl8fhe.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=Cluster0",
+                mongoUrl: config.MONGO_URL,
                 ttl: 3000
             }
         )

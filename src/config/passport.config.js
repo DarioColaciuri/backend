@@ -1,12 +1,11 @@
 import passport from "passport"
 import local from "passport-local"
 import github from "passport-github2"
-import { creaHash, validaPassword } from "../../utils.js"
-import CartManager from '../controllers/Mongo/cartManagerMongo.js';
-import { UsuariosManagerMongo } from '../controllers/Mongo/userManagerMongo.js';
+import { creaHash, validaPassword } from "../utils.js"
+import CartManager from '../dao/Mongo/cartManagerMongo.js';
+import { UsuariosManagerMongo } from '../dao/Mongo/userManagerMongo.js';
+import { config } from "../config/config.js"
 const usuariosManager = new UsuariosManagerMongo()
-
-
 
 export const initializePassport = () => {
 
@@ -14,9 +13,9 @@ export const initializePassport = () => {
         "github",
         new github.Strategy(
             {
-                clientID: "Iv1.3cd733c63b4ae695",
-                clientSecret: "540ff05939c045349abba31ffb38c7813412de81",
-                callbackURL: "http://localhost:8080/api/sessions/callbackGithub"
+                clientID: config.CLIENT_ID,
+                clientSecret: config.CLIENT_SECRET,
+                callbackURL: config.CALLBACK_URL
             },
             async function (accessToken, refreshToken, profile, done) {
                 try {
