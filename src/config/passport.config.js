@@ -2,10 +2,12 @@ import passport from "passport"
 import local from "passport-local"
 import github from "passport-github2"
 import { creaHash, validaPassword } from "../utils.js"
-import CartManager from '../dao/Mongo/cartManagerMongo.js';
-import { UsuariosManagerMongo } from '../dao/Mongo/userManagerMongo.js';
+// import CartManager from '../dao/Mongo/cartManagerMongo.js';
+// import  UsuariosManagerMongo from '../dao/Mongo/userManagerMongo.js';
+// const usuariosManager = new UsuariosManagerMongo()
 import { config } from "../config/config.js"
-const usuariosManager = new UsuariosManagerMongo()
+import { userRepository, cartRepository } from "../services/service.js";
+
 
 export const initializePassport = () => {
 
@@ -22,10 +24,10 @@ export const initializePassport = () => {
 
                     let username = profile._json.name
                     let email = profile._json.email
-                    let usuario = await usuariosManager.getBy({ email })
+                    let usuario = await userRepository.getBy({ email })
 
                     if (!usuario) {
-                        usuario = await usuariosManager.create({
+                        usuario = await userRepository.create({
                             username, email,
                             profileGithub: profile
                         })
@@ -52,7 +54,7 @@ export const initializePassport = () => {
                         return done(null, false)
                     }
 
-                    let existe = await usuariosManager.getBy({ email })
+                    let existe = await userRepository.getBy({ email })
                     if (existe) {
                         return done(null, false)
                     }
@@ -62,11 +64,11 @@ export const initializePassport = () => {
                         rol = 'admin';
                     }
 
-                    const newCart = await new CartManager().createCart();
+                    const newCart = await cartRepository.createCart();
                     const cartId = newCart._id.toString();
 
                     password = creaHash(password)
-                    let nuevoUsuario = await usuariosManager.create({
+                    let nuevoUsuario = await userRepository.create({
                         username,
                         email,
                         password,
@@ -92,8 +94,8 @@ export const initializePassport = () => {
             },
             async (username, password, done) => {
                 try {
-                    console.log({ username })
-                    let usuario = await usuariosManager.getBy({ email: username })
+                    let usuario = await userRepository.getBy({ email: username })
+                    console.log(usuario)
                     if (!usuario) {
                         return done(null, false)
                     }
@@ -117,7 +119,7 @@ export const initializePassport = () => {
     })
 
     passport.deserializeUser(async (id, done) => {
-        let usuario = await usuariosManager.getBy({ _id: id })
+        let usuario = await userRepository.getBy({ _id: id })
         return done(null, usuario)
     })
 

@@ -3,7 +3,9 @@
         <li><a href="/realTimeProducts">Panel de administrador</a></li>
         <li><a href="/carts">Carts</a></li>
     {{/if}}
+    {{#if isUser}}
     <li><a href="/products">Productos</a></li>
+    {{/if}}
     <li><a href="/user">Usuario</a></li>
     <div class="user">
         <li class="username">Bienvenido: <strong>{{usuario.username}}</strong></li>

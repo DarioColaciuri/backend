@@ -1,14 +1,16 @@
-import ProductManager from '../dao/Mongo/productManagerMongo.js';
+// import ProductManager from '../dao/Mongo/productManagerMongo.js';
+import { productRepository } from '../services/service.js';
 import { productsModel } from '../dao/models/products.model.js';
 import cartModel from '../dao/models/carts.model.js';
 import __dirname from "../utils.js"
 
-const products = new ProductManager()
+// const products = new ProductManager()
 
 export const getProducts = async (req, res) => {
     let { pagina, limit, query, sort } = req.query;
     let usuario = req.session.usuario
     const isAdmin = usuario.rol === 'admin';
+    const isUser = usuario.rol === "user"
     const userCart = req.session.usuario.cart
 
     if (!pagina) {
@@ -51,6 +53,7 @@ export const getProducts = async (req, res) => {
             usuario,
             userCart,
             isAdmin,
+            isUser,
             totalPages,
             prevPage,
             nextPage,
@@ -105,7 +108,7 @@ export const getProductById = async (req, res) => {
         const isAdmin = usuario.rol === 'admin';
         const productId = req.params.pid;
         const userCart = req.session.usuario.cart
-        const product = JSON.parse(JSON.stringify(await products.getProductById(productId)));
+        const product = JSON.parse(JSON.stringify(await productRepository.getProductById(productId)));
         res.setHeader("Content-Type", "text/html");
         res.status(200).render("productDetail", { product, usuario, isAdmin, userCart });
     } catch (error) {
@@ -136,6 +139,7 @@ export const login = (req, res) => {
 export const user = (req, res) => {
     let usuario = req.session.usuario
     const isAdmin = usuario.rol === 'admin';
-    res.status(200).render('user', { usuario, isAdmin })
+    const isUser = usuario.rol === "user"
+    res.status(200).render('user', { usuario, isAdmin, isUser })
 }
 
