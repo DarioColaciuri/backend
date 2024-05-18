@@ -12,6 +12,8 @@ export const getProducts = async (req, res) => {
     const isAdmin = usuario.rol === 'admin';
     const isUser = usuario.rol === "user"
     const userCart = req.session.usuario.cart
+    const cartUser = await cartModel.findById(userCart).populate('products.product', '_id title price description category code stock thumbnail').lean();
+    const totalQuantity = cartUser.products.reduce((acc, item) => acc + item.quantity, 0);
 
     if (!pagina) {
         pagina = 1;
@@ -51,6 +53,7 @@ export const getProducts = async (req, res) => {
             status: "success",
             payload: listadeproductos,
             usuario,
+            totalQuantity,
             userCart,
             isAdmin,
             isUser,
@@ -92,7 +95,6 @@ export const getCartById = async (req, res) => {
         const isAdmin = usuario.rol === 'admin';
         const cart = await cartModel.findById(cid).populate('products.product', '_id title price description category code stock thumbnail').lean();
         const cartTotal = cart.products.reduce((acc, prod) => acc + prod.product.price * prod.quantity, 0);
-        console.log(cartTotal)
         res.setHeader("Content-Type", "text/html");
         res.status(200).render("cartDetail", { cart, cartTotal, usuario, isAdmin });
 
@@ -136,10 +138,23 @@ export const login = (req, res) => {
     res.status(200).render('login')
 }
 
-export const user = (req, res) => {
+export const cart = async (req, res) => {
+    let usuario = req.session.usuario;
+    const isAdmin = usuario.rol === 'admin';
+    const isUser = usuario.rol === "user";
+    const cartId = req.session.usuario.cart;
+    const userCart = await cartModel.findById(cartId).populate('products.product', '_id title price description category code stock thumbnail').lean();
+    const totalQuantity = userCart.products.reduce((acc, item) => acc + item.quantity, 0);
+    res.status(200).render('cart', { totalQuantity, userCart, usuario, isAdmin, isUser });
+}
+
+export const user = async (req, res) => {
     let usuario = req.session.usuario
     const isAdmin = usuario.rol === 'admin';
     const isUser = usuario.rol === "user"
-    res.status(200).render('user', { usuario, isAdmin, isUser })
+    const cartId = req.session.usuario.cart;
+    const userCart = await cartModel.findById(cartId).populate('products.product', '_id title price description category code stock thumbnail').lean();
+    const totalQuantity = userCart.products.reduce((acc, item) => acc + item.quantity, 0);
+    res.status(200).render('user', { totalQuantity, usuario, isAdmin, isUser })
 }
 

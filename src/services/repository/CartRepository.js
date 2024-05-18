@@ -34,8 +34,6 @@ class CartRepository {
     emptyCart = (cartId) => {
         return this.cartManager.emptyCart(cartId);
     }
-
-
 }
 
 export default CartRepository;

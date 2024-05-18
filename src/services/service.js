@@ -16,11 +16,11 @@ import UserRepository from './repository/UserRepository.js';
 const UserManager = new UsuariosManagerMongo();
 export const userRepository = new UserRepository(UserManager);
 
-// import TicketManager from '';
-// import TicketRepository from './repository/TicketRepository.js';
+import TicketManager from '../dao/Mongo/ticketManagerMongo.js';
+import TicketRepository from "../services/repository/TicketRepository.js"
 
-// const ticketManager = new TicketManager()
-// export const ticketRepository = new TicketRepository(ticketManager)
+const ticketManager = new TicketManager()
+export const ticketRepository = new TicketRepository(ticketManager)
 
 import MessageManager from '../dao/Mongo/messageManagerMongo.js'
 import MessageRepository from './repository/MessageRepository.js';

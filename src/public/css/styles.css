@@ -66,6 +66,16 @@ i {
     color: #fff; 
 }
 
+.cart {
+    color: white;
+}
+
+.numerito {
+    background-color: #416788;
+    padding: .3rem;
+    border-radius: 1rem;
+}
+
 .card-content {
     font-family: "Josefin Sans", sans-serif;
     display: flex;
@@ -429,6 +439,30 @@ a {
 
 .registrate {
     color: #416788 ;
+}
+
+.product {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+
+.product-img {
+    width: 200px;
+}
+
+.product-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+}
+
+.products-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 }
 
 
