@@ -3,6 +3,10 @@ import { productRepository } from '../services/service.js';
 import { productsModel } from '../dao/models/products.model.js';
 import cartModel from '../dao/models/carts.model.js';
 import __dirname from "../utils.js"
+import { generateMockProducts } from '../mocks/mock.js';
+import CustomError from '../services/errors/CustomError.js';
+import EErrors from '../services/errors/errors-enum.js';
+
 
 // const products = new ProductManager()
 
@@ -88,19 +92,23 @@ export const getCarts = async (req, res) => {
     }
 }
 
-export const getCartById = async (req, res) => {
+export const getCartById = async (req, res, next) => {
     try {
         const cid = req.params.cid;
         let usuario = req.session.usuario
         const isAdmin = usuario.rol === 'admin';
         const cart = await cartModel.findById(cid).populate('products.product', '_id title price description category code stock thumbnail').lean();
+        if (!cart) {
+            throw new CustomError(EErrors.CART_NOT_FOUND);
+        }
         const cartTotal = cart.products.reduce((acc, prod) => acc + prod.product.price * prod.quantity, 0);
         res.setHeader("Content-Type", "text/html");
         res.status(200).render("cartDetail", { cart, cartTotal, usuario, isAdmin });
 
     } catch (error) {
-        console.error(error);
-        res.status(500).send("Error interno del servidor");
+        // console.error(error);
+        // res.status(500).send("Error interno del servidor");
+        next(error);
     }
 }
 
@@ -156,5 +164,11 @@ export const user = async (req, res) => {
     const userCart = await cartModel.findById(cartId).populate('products.product', '_id title price description category code stock thumbnail').lean();
     const totalQuantity = userCart.products.reduce((acc, item) => acc + item.quantity, 0);
     res.status(200).render('user', { totalQuantity, usuario, isAdmin, isUser })
+}
+
+export const mock = (req, res) => {
+    const mockProducts = generateMockProducts();
+    const cartId = req.session.usuario.cart;
+    res.status(200).render('mock', {products: mockProducts, cartId});
 }
 

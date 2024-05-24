@@ -1,5 +1,6 @@
 import express from "express";
 const cartRouter = express.Router();
+import  errorHandler  from "../middlewares/error.js"
 import {
     getCarts,
     createCart,
@@ -22,5 +23,7 @@ cartRouter.put("/:cid", updateCart);
 cartRouter.put("/:cid/product/:pid", updateProductQuantity);
 cartRouter.delete("/:cid", emptyCart);
 cartRouter.post("/:cid/purchase", purchase);
+
+cartRouter.use(errorHandler);
 
 export default cartRouter;

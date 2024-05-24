@@ -1,7 +1,9 @@
 // import CartManager from "../dao/Mongo/cartManagerMongo.js"
 import CartModel from "../dao/models/carts.model.js"
 // const cartManager = new CartManager();
-import { cartRepository } from "../services/service.js";
+import { cartRepository, productRepository } from "../services/service.js";
+import CustomError from "../services/errors/CustomError.js"
+import EErrors from "../services/errors/errors-enum.js";
 
 export const getCarts = async (req, res) => {
     try {
@@ -21,14 +23,15 @@ export const createCart = async (req, res) => {
     }
 }
 
-export const getCartById = async (req, res) => {
+export const getCartById = async (req, res, next) => {
     let cartId = req.params.cid;
 
     try {
         const cart = await CartModel.findById(cartId);
         if (!cart) {
-            console.log("No existe el carrito con ese id");
-            return res.status(404).json({ error: "Carrito no encontrado" });
+            // console.log("No existe el carrito con ese id");
+            // return res.status(404).json({ error: "Carrito no encontrado" });
+            throw new CustomError(EErrors.CART_NOT_FOUND, { cartId });
         }
         const productsInCart = cart.products.map(item => ({
             product: item.product.toObject(),
@@ -36,22 +39,29 @@ export const getCartById = async (req, res) => {
         }));
         res.json({ cart });
     } catch (error) {
-        console.error("Error al obtener carrito", error);
-        res.status(500).json({ error: "Error interno del servidor" });
+        // console.error("Error al obtener carrito", error);
+        // res.status(500).json({ error: "Error interno del servidor" });
+        next(error);
     }
 }
 
-export const addProductToCart = async (req, res) => {
+export const addProductToCart = async (req, res, next) => {
+    try {
     let cartId = req.params.cid;
     let productId = req.params.pid;
+    const productToAddCart = await productRepository.getProductById(productId);
     let quantity = req.body.quantity || 1;
 
-    try {
+    if (!productToAddCart) {
+        throw new CustomError(EErrors.PRODUCT_NOT_FOUND, { productId });
+    }
+
         const updateCart = await cartRepository.addProductToCart(cartId, productId, quantity);
         res.json(updateCart.products);
     } catch (error) {
-        console.error("Error al agregar producto", error);
-        res.status(500).json({ error: "Error interno del servidor" });
+        // console.error("Error al agregar producto", error);
+        // res.status(500).json({ error: "Error interno del servidor" });
+        next(error);
     }
 }
 

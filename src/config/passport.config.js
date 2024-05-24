@@ -95,7 +95,6 @@ export const initializePassport = () => {
             async (username, password, done) => {
                 try {
                     let usuario = await userRepository.getBy({ email: username })
-                    console.log(usuario)
                     if (!usuario) {
                         return done(null, false)
                     }

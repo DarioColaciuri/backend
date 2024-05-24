@@ -50,6 +50,7 @@ app.use("/api/carts", cartRouter);
 app.use("/api/sessions", sessionsRouter)
 app.use("/", vistasRouter)
 
+
 connectToDB()
 
 app.use((req, res) => {

@@ -1,0 +1,44 @@
+{{> navbar}}
+<div class="container-lista">
+{{#each products}}
+      <a href="/product/{{this._id}}">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-code">
+              <i class="bi bi-tag"></i>
+              Code:
+              {{this.code}}
+            </div>
+            <div class="card-content">
+              <div class="card-body">
+                <h3 class="card-title">{{this.title}}</h3>
+                <ul class="list-product">
+                  <li class="price"><i class="bi bi-currency-dollar icono-price"></i>
+                    {{this.price}}</li>
+                </ul>
+                <div class="container-img">
+                  <img
+                    src="{{this.thumbnails}}"
+                    alt="{{this.title}}"
+                    class="card-img"
+                  />
+                </div>
+            <div class="btn-container">
+            <button
+                class="agregar-btn"
+                type="submit"
+                id="add-btn"
+                onclick="agregarAlCarrito('{{this._id}}', '{{../cartId}}')"
+                value="{{this._id}}"
+              >Agregar al carrito
+            </button>
+          </div>
+              </div>
+            </div>
+          </div>
+        </a>
+        </div>
+    {{/each}}
+    </div>
+
+    <script src="/js/home.js"></script>
