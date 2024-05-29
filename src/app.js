@@ -26,6 +26,8 @@ app.set('views', path.join(__dirname, '/views'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+connectToDB()
+
 app.use(session(
     {
         secret: config.SECRET,
@@ -51,7 +53,7 @@ app.use("/api/sessions", sessionsRouter)
 app.use("/", vistasRouter)
 
 
-connectToDB()
+
 
 app.use((req, res) => {
     res.status(404).json({ error: "Ruta no encontrada" });
