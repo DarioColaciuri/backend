@@ -1,10 +1,10 @@
 import MessageManager from "../dao/Mongo/messageManagerMongo.js"
-
+import { loggerDev } from "../config/logger.js"
 const messageManager = new MessageManager()
 
 const socketChat = (socketServer) => {
     socketServer.on('connection', async (socket) => {
-        console.log("conectado usuario con id: " + socket.id)
+        loggerDev.info("conectado usuario con id: " + socket.id)
 
         socket.on("mensaje", async (info) => {
             await messageManager.createMessage(info);

@@ -3,6 +3,7 @@
 let btnSubmit = document.getElementById("submit")
 let inputEmail = document.getElementById("email")
 let inputPassword = document.getElementById("password")
+const port = window.location.port || 8080
 
 btnSubmit.addEventListener("click", async (e) => {
     e.preventDefault()
@@ -36,7 +37,7 @@ btnSubmit.addEventListener("click", async (e) => {
         }).showToast();
 
         setTimeout(function () {
-            window.location.href = "http://localhost:8080/products";
+            window.location.href = `http://localhost:${port}/products`;
         }, 1500);
 
     } else {
@@ -56,7 +57,7 @@ btnSubmit.addEventListener("click", async (e) => {
 // logout
 
 function logout() {
-    fetch("http://localhost:8080/api/sessions/logout")
+    fetch(`http://localhost:${port}/api/sessions/logout`)
         .then(response => {
             if (response.ok) {
                 Toastify({
@@ -70,7 +71,7 @@ function logout() {
                     close: true
                 }).showToast();
                 setTimeout(function () {
-                    window.location.href = "http://localhost:8080/";
+                    window.location.href = `http://localhost:${port}/`;
                 }, 1500);
             } else {
                 Toastify({

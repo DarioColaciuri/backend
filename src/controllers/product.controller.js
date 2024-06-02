@@ -1,9 +1,9 @@
 import { routes } from "../utils.js";
-// import ProductManager from "../dao/Mongo/productManagerMongo.js";
 import { productsModel } from '../dao/models/products.model.js';
 import { productRepository } from "../services/service.js"
 const rutaProductos = routes.products;
-// const products = new ProductManager(rutaProductos);
+
+
 
 export const getAllProducts = async (req, res) => {
     let { pagina, limit, query, sort } = req.query;
@@ -55,7 +55,7 @@ export const getAllProducts = async (req, res) => {
         })
 
     } catch (error) {
-        console.error(error);
+        req.logger.error(error);
         res.status(500).send("Error interno del servidor");
     }
 }
@@ -66,6 +66,7 @@ export const getProductById = async (req, res) => {
         let product = await productRepository.getProductById(productId);
         res.json({ product });
     } catch (error) {
+        req.logger.error(error);
         res.status(404).json({ error: error.message });
     }
 }
@@ -76,6 +77,7 @@ export const addProduct = async (req, res) => {
         await productRepository.addProduct(newProduct);
         res.status(201).json({ message: "Producto creado correctamente" });
     } catch (error) {
+        req.logger.error(error);
         res.status(400).json({ error: error.message });
     }
 }
@@ -87,6 +89,7 @@ export const updateProduct = async (req, res) => {
         await productRepository.updateProduct(productId, updatedProduct);
         res.json({ message: "Producto actualizado correctamente" });
     } catch (error) {
+        req.logger.error(error);
         res.status(400).json({ error: error.message });
     }
 }
@@ -97,6 +100,7 @@ export const deleteProduct = async (req, res) => {
         await productRepository.deleteProduct(productId);
         res.json({ message: "Producto eliminado correctamente" });
     } catch (error) {
+        req.logger.error(error);
         res.status(404).json({ error: error.message });
     }
 }

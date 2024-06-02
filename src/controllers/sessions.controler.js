@@ -1,9 +1,9 @@
-// import  UsuariosManagerMongo from "../dao/Mongo/userManagerMongo.js";
 import { creaHash, validaPassword } from '../utils.js';
 import { userRepository } from "../services/service.js";
 import UserDTO from "../services/dto/users.dto.js"
+import { config } from "../config/config.js"
 
-// let usuariosManager = new UsuariosManagerMongo()
+
 
 export const register = async (req, res) => {
 
@@ -14,8 +14,9 @@ export const register = async (req, res) => {
 
     try {
         res.setHeader('Content-Type', 'application/json');
-        res.redirect("http://localhost:8080/")
+        res.redirect(`http://localhost:${config.PORT}/`)
     } catch (error) {
+        req.logger.error(error);
         return res.status(400).json({ error: `Error inseperado` })
     }
 }
@@ -81,7 +82,7 @@ export const logout = (req, res) => {
 
 export const callBackGithub = (req, res) => {
     req.session.usuario = req.user
-    return res.redirect("http://localhost:8080/products")
+    return res.redirect(`http://localhost:${config.PORT}/products`)
 }
 
 export const errorGithub =(req, res) => {

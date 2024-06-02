@@ -1,7 +1,7 @@
 function agregarAlCarrito(productoId, userCart) {
 
-
-    fetch(`http://localhost:8080/api/carts/${userCart}/product/${productoId}/`, {
+    const port = window.location.port || 8080
+    fetch(`http://localhost:${port}/api/carts/${userCart}/product/${productoId}/`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -33,7 +33,7 @@ function agregarAlCarrito(productoId, userCart) {
         }
     })
     .catch(error => {
-        console.error('Error al agregar producto al carrito:', error);
+        req.logger.error('Error al agregar producto al carrito:', error);
         Toastify({
             text: 'Hubo un error al agregar el producto al carrito',
             duration: 3000,

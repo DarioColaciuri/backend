@@ -5,10 +5,10 @@ export const purchase = async (req, res) => {
     const cartId = req.session.usuario.cart.toString();
     try {
         const ticket = await ticketRepository.createTicket(userId, cartId);
-        console.log('Ticket creado exitosamente.');
+        req.logger.info('Ticket creado exitosamente.');
         res.status(201).json(ticket);
     } catch (error) {
-        console.log('Error al crear el ticket:', error.message);
+        req.logger.error('Error al crear el ticket');
         res.status(500).json({ error: 'Error interno del servidor', details: error.message });
     }
 };

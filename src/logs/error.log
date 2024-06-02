@@ -1,0 +1,15 @@
+{
+  level: 'error',
+  message: 'Error al crear el ticket:',
+  timestamp: '2024-06-02T19:03:43.330Z'
+}
+{
+  message: 'Ticket creado exitosamente.',
+  level: 'info',
+  timestamp: '2024-06-02T19:04:10.024Z'
+}
+{
+  level: 'error',
+  message: 'Error al crear el ticket:',
+  timestamp: '2024-06-02T19:04:13.190Z'
+}

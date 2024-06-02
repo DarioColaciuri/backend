@@ -15,14 +15,16 @@ import MongoStore from "connect-mongo"
 import passport from "passport";
 import { initializePassport } from "./config/passport.config.js";
 import { config } from "../src/config/config.js"
+import { addLogger, loggerDev } from "./config/logger.js"
+import loggerRouter from './routes/loggers.router.js';
 
 const PORT = config.PORT;
 const app = express();
 
+app.use(addLogger)
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, '/views'));
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -44,13 +46,14 @@ app.use(session(
 initializePassport();
 app.use(passport.initialize())
 app.use(passport.session()) 
-
 app.use(express.static(path.join(__dirname, '/public')));
+
 
 app.use("/api/products", productRouter);
 app.use("/api/carts", cartRouter);
 app.use("/api/sessions", sessionsRouter)
 app.use("/", vistasRouter)
+app.use("/loggerTest", loggerRouter)
 
 
 
@@ -60,7 +63,7 @@ app.use((req, res) => {
 });
 
 const http = app.listen(PORT, () => {
-    console.log(`Server on port ${PORT}`);
+    loggerDev.info(`Server on port ${PORT}`);
 });
 
 const io = new Server(http)

@@ -1,5 +1,6 @@
 function buyCart(userCart) {
-    fetch(`http://localhost:8080/api/carts/${userCart}/purchase`, {
+    const port = window.location.port || 8080
+    fetch(`http://localhost:${port}/api/carts/${userCart}/purchase`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -49,7 +50,7 @@ function buyCart(userCart) {
         }
     })
     .catch(error => {
-        console.error('Error al comprar:', error);
+        req.logger.error('Error al comprar:', error);
         Toastify({
             text: 'Error al comprar',
             duration: 3000,

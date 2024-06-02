@@ -1,4 +1,3 @@
-// import ProductManager from '../dao/Mongo/productManagerMongo.js';
 import { productRepository } from '../services/service.js';
 import { productsModel } from '../dao/models/products.model.js';
 import cartModel from '../dao/models/carts.model.js';
@@ -6,9 +5,6 @@ import __dirname from "../utils.js"
 import { generateMockProducts } from '../mocks/mock.js';
 import CustomError from '../services/errors/CustomError.js';
 import EErrors from '../services/errors/errors-enum.js';
-
-
-// const products = new ProductManager()
 
 export const getProducts = async (req, res) => {
     let { pagina, limit, query, sort } = req.query;
@@ -73,7 +69,7 @@ export const getProducts = async (req, res) => {
         });
 
     } catch (error) {
-        console.error(error);
+        req.logger.error(error);
         res.status(500).send("Error interno del servidor");
     }
 }
@@ -87,7 +83,7 @@ export const getCarts = async (req, res) => {
         res.status(200).render("carts", { carts, usuario, isAdmin });
 
     } catch (error) {
-        console.error(error);
+        req.logger.error(error);
         res.status(500).send("Error interno del servidor");
     }
 }
@@ -106,8 +102,6 @@ export const getCartById = async (req, res, next) => {
         res.status(200).render("cartDetail", { cart, cartTotal, usuario, isAdmin });
 
     } catch (error) {
-        // console.error(error);
-        // res.status(500).send("Error interno del servidor");
         next(error);
     }
 }
@@ -122,7 +116,7 @@ export const getProductById = async (req, res) => {
         res.setHeader("Content-Type", "text/html");
         res.status(200).render("productDetail", { product, usuario, isAdmin, userCart });
     } catch (error) {
-        console.error(error);
+        req.logger.error(error);
         res.status(500).send("No se encontro producto");
     }
 }
@@ -143,7 +137,8 @@ export const register = (req, res) => {
 }
 
 export const login = (req, res) => {
-    res.status(200).render('login')
+    const port = req.socket.localPort || 8080;
+    res.status(200).render('login', { port })
 }
 
 export const cart = async (req, res) => {

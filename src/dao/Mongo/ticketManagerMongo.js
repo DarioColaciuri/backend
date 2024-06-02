@@ -32,7 +32,7 @@ class TicketManager {
 
             return { ticket, unavailableProducts };
         } catch (error) {
-            console.error('Error al crear el ticket:', error.message);
+            req.logger.error('Error al crear el ticket:', error.message);
             throw new Error('Error al crear el ticket. Consulta los registros para obtener más detalles.');
         }
     }
@@ -61,7 +61,7 @@ class TicketManager {
             }
             return { availableProducts, unavailableProducts };
         } catch (error) {
-            console.log("Error al verificar stock", error);
+            req.logger.error("Error al verificar stock", error);
             throw error;
         }
     }
@@ -74,7 +74,7 @@ class TicketManager {
                 });
             }
         } catch (error) {
-            console.log("Error al actualizar stock", error);
+            req.logger.error("Error al actualizar stock", error);
             throw error;
         }
     }
@@ -88,7 +88,7 @@ class TicketManager {
             const tickets = await ticketsModel.find({ purchaser: user.email });
             return tickets;
         } catch (error) {
-            console.error("Error al obtener los tickets:", error);
+            req.logger.error("Error al obtener los tickets:", error);
             throw error;
         }
     }

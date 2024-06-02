@@ -1,12 +1,13 @@
 import mongoose from "mongoose";
 import { config } from "../config/config.js"
+import { loggerDev } from "./logger.js";
 const URI = config.MONGO_URL
 const connectToDB = () => {
     try {
         mongoose.connect(URI)
-        console.log('connected to DB ecommerce')
+        loggerDev.info('connected to DB ecommerce')
     } catch (error) {
-        console.log(error);
+        loggerDev.error(error);
     }
 };
 
