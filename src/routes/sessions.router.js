@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import passport from "passport";
-import { register, failedRegister, login, failLogin, logout, callBackGithub, errorGithub, current } from "../controllers/sessions.controler.js"
+import { register, failedRegister, login, failLogin, logout, callBackGithub, errorGithub, current, recoverPassword, changePassword } from "../controllers/sessions.controler.js"
 
 export const router = Router()
 
@@ -13,4 +13,6 @@ router.get('/github', passport.authenticate("github", {}), (req, res) => { })
 router.get('/callbackGithub', passport.authenticate("github", { failureRedirect: "/api/sessions/errorGitHub" }), callBackGithub)
 router.get("/errorGitHub", errorGithub)
 router.get("/current", current);
+router.post("/recoverpassword", recoverPassword)
+router.post("/changepassword", changePassword)
 

@@ -7,7 +7,7 @@ class CartManager {
             await newCart.save();
             return newCart;
         } catch (error) {
-            req.logger.log("Error al crear carrito", error);
+            req.logger.info("Error al crear carrito", error);
             throw error;
         }
     }

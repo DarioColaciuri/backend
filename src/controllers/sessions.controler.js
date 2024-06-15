@@ -1,7 +1,12 @@
 import { creaHash, validaPassword } from '../utils.js';
 import { userRepository } from "../services/service.js";
 import UserDTO from "../services/dto/users.dto.js"
+import { usersModel } from '../dao/models/users.model.js';
 import { config } from "../config/config.js"
+import { loggerDev } from '../config/logger.js';
+import jwt from "jsonwebtoken"
+import { enviarMail } from '../config/mailer.js';
+import bcrypt from 'bcrypt';
 
 
 
@@ -105,4 +110,82 @@ export const current = (req, res) => {
         return res.status(401).json({ error: "No hay usuario logueado" });
     }
 }
+
+export const recoverPassword = async (req, res) => {
+    try {
+        const { email } = req.body
+        const user = await usersModel.findOne({ email })
+
+        if (!user) {
+            loggerDev.error(`No se encontro el usuario con el email ${email}`)
+            return res.status(401).json({ error: `Credenciales incorrectas` })
+        }
+
+        loggerDev.info(`Se encontro el usuario con el email ${email}`)
+
+        const token = jwt.sign({ email }, config.SECRET, { expiresIn: '1h' })
+        const subject = 'Recuperar contraseña'
+        const message = `<h1>Recupere su contraseña</h1>
+        <p>Haga click en este enlace para recuperar su contraseña:</p> 
+        <a href="http://localhost:${config.PORT}/resetpassword?token=${token}">Recuperar contraseña</a>`
+
+        await enviarMail(user.email, subject, message)
+        res.status(200).json({ message: 'Se envio un correo electronico para recuperar su contraseña' })
+    } catch (error) {
+        loggerDev.error("Error al recuperar la contraseña", error)
+        return res.status(400).json({ error: `Error inesperado` })
+    }
+}
+
+export const changePassword = async (req, res) => {
+    try {
+        const { password } = req.body
+        const token = req.query.token
+
+        if (!token) {
+            loggerDev.error("Token invalido")
+            return res.status(400).json({ error: `Token invalido` })
+        }
+
+
+        if (!password) {
+            loggerDev.error("Contraseña invalida")
+            return res.status(400).json({ error: `Contraseña invalida` })
+        }
+
+        try {
+            const decoded = jwt.verify(token, config.SECRET)
+            loggerDev.info("Token verificado", decoded)
+            const { email } = decoded
+            const user = await usersModel.findOne({ email })
+
+            if (!user) {
+                loggerDev.error(`No se encontro el usuario`)
+                return res.status(401).json({ error: `Credenciales incorrectas` })
+            }
+
+            const passwordMatch = bcrypt.compareSync(password, user.password)
+            if (passwordMatch) {
+                loggerDev.error(`La nueva contraseña no puede ser igual a la anterior`)
+                return res.status(400).json({ error: `La nueva contraseña no puede ser igual a la anterior` })
+            }
+
+            const hashedPassword = creaHash(password)
+            await usersModel.updateOne({ email }, { password: hashedPassword })
+            loggerDev.info("Contraseña actualizada")
+            return res.status(200).json({ message: 'Contraseña actualizada' })
+        } catch (error) {
+            if (error.name === 'TokenExpiredError') {
+                loggerDev.error("Token expirado")
+                return res.render('forgotPassword', { error: 'Token expirado' })
+            }
+            loggerDev.error("Error al cambiar la contraseña", error)
+            return res.status(400).json({ error: `Error inesperado` })
+        }
+    } catch (error) {
+        loggerDev.error("Error al cambiar la contraseña", error)
+        return res.status(400).json({ error: `Error inesperado` })
+    }
+}
+
 
