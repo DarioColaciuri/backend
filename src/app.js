@@ -17,6 +17,7 @@ import { initializePassport } from "./config/passport.config.js";
 import { config } from "../src/config/config.js"
 import { addLogger, loggerDev } from "./config/logger.js"
 import loggerRouter from './routes/loggers.router.js';
+import usersRouter from './routes/users.router.js';
 
 const PORT = config.PORT;
 const app = express();
@@ -54,6 +55,7 @@ app.use("/api/carts", cartRouter);
 app.use("/api/sessions", sessionsRouter)
 app.use("/", vistasRouter)
 app.use("/loggerTest", loggerRouter)
+app.use("/api/users", usersRouter)
 
 
 

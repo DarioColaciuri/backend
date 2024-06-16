@@ -45,6 +45,7 @@
           </div>
         </a>
           <div class="btn-container">
+          {{#unless (eq this.owner ../email)}}
             <button
                 class="agregar-btn"
                 type="submit"
@@ -53,6 +54,7 @@
                 value="{{this._id}}"
               >Agregar al carrito
             </button>
+          {{/unless}}
           </div>
         </div>
     {{/each}}

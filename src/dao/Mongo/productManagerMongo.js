@@ -1,4 +1,5 @@
 import { productsModel } from "../models/products.model.js"
+import { usersModel } from "../models/users.model.js";
 
 export default class ProductManager {
 
@@ -39,7 +40,6 @@ export default class ProductManager {
         catch (err) {
             return err
         }
-
     }
 
     updateProduct = async (id, product) => {

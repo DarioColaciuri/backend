@@ -5,13 +5,19 @@ import __dirname from "../utils.js"
 import { generateMockProducts } from '../mocks/mock.js';
 import CustomError from '../services/errors/CustomError.js';
 import EErrors from '../services/errors/errors-enum.js';
+import { usersModel } from '../dao/models/users.model.js';
 
 export const getProducts = async (req, res) => {
     let { pagina, limit, query, sort } = req.query;
-    let usuario = req.session.usuario
+    let datoUsuario = req.session.usuario._id
+    let usuario = await usersModel.findById(datoUsuario)
     const isAdmin = usuario.rol === 'admin';
     const isUser = usuario.rol === "user"
+    const isPremium = usuario.rol === "premium"
+    const username = usuario.username
     const userCart = req.session.usuario.cart
+    let email = usuario.email
+
     const cartUser = await cartModel.findById(userCart).populate('products.product', '_id title price description category code stock thumbnail').lean();
     const totalQuantity = cartUser.products.reduce((acc, item) => acc + item.quantity, 0);
 
@@ -53,7 +59,10 @@ export const getProducts = async (req, res) => {
             status: "success",
             payload: listadeproductos,
             usuario,
+            email,
+            username,
             totalQuantity,
+            isPremium,
             userCart,
             isAdmin,
             isUser,
@@ -108,13 +117,15 @@ export const getCartById = async (req, res, next) => {
 
 export const getProductById = async (req, res) => {
     try {
-        let usuario = req.session.usuario
+        let datoUsuario = req.session.usuario._id;
+        let usuario = await usersModel.findById(datoUsuario);
         const isAdmin = usuario.rol === 'admin';
+        let email = usuario.email;
         const productId = req.params.pid;
-        const userCart = req.session.usuario.cart
+        const userCart = req.session.usuario.cart;
         const product = JSON.parse(JSON.stringify(await productRepository.getProductById(productId)));
         res.setHeader("Content-Type", "text/html");
-        res.status(200).render("productDetail", { product, usuario, isAdmin, userCart });
+        res.status(200).render("productDetail", { product, usuario, isAdmin, userCart, email });
     } catch (error) {
         req.logger.error(error);
         res.status(500).send("No se encontro producto");
@@ -152,13 +163,18 @@ export const cart = async (req, res) => {
 }
 
 export const user = async (req, res) => {
-    let usuario = req.session.usuario
+    let datoUsuario = req.session.usuario._id
+    let usuario = await usersModel.findById(datoUsuario)
     const isAdmin = usuario.rol === 'admin';
     const isUser = usuario.rol === "user"
+    const isPremium = usuario.rol === "premium"
     const cartId = req.session.usuario.cart;
+    const rol = usuario.rol
+    const username = usuario.username
+    const email = usuario.email
     const userCart = await cartModel.findById(cartId).populate('products.product', '_id title price description category code stock thumbnail').lean();
     const totalQuantity = userCart.products.reduce((acc, item) => acc + item.quantity, 0);
-    res.status(200).render('user', { totalQuantity, usuario, isAdmin, isUser })
+    res.status(200).render('user', { totalQuantity, usuario, isPremium, isAdmin, isUser, rol, username, email })
 }
 
 export const mock = (req, res) => {
@@ -176,3 +192,26 @@ export const resetPassword = (req, res) => {
     res.status(200).render('resetPassword', {token})
 }
 
+export const rol = async (req, res) => {
+    let datoUsuario = req.session.usuario._id
+    let usuario = await usersModel.findById(datoUsuario)
+    let rol = usuario.rol
+    let uid = usuario._id
+    const isAdmin = usuario.rol === 'admin';
+    const isUser = usuario.rol === "user"
+    const isPremium = usuario.rol === "premium"
+    res.status(200).render('rol', { rol, uid, isAdmin, isUser, isPremium})
+}
+
+export const premium = async (req, res) => {
+    let datoUsuario = req.session.usuario._id
+    let usuario = await usersModel.findById(datoUsuario)
+    let rol = usuario.rol
+    let uid = usuario._id
+    let email = usuario.email
+    const isAdmin = usuario.rol === 'admin';
+    const isUser = usuario.rol === "user"
+    const isPremium = usuario.rol === "premium"
+    const productos = await productsModel.find({ owner: email }).lean();
+    res.status(200).render('premium', { usuario, productos, rol, uid, isAdmin, isUser, isPremium})
+}

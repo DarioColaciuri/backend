@@ -14,15 +14,15 @@
                         <li><i class="bi bi-box icono-price"></i> Stock: {{product.stock}}</li>
                         <br>
                         <li class="price"><i class="bi bi-currency-dollar icono-price"></i>{{product.price}}</li>
-                        {{!-- <li><i class="bi bi-grid"></i> Category: {{product.category}}</li>
-                        <li><i class="bi bi-check-circle"></i> Status: {{product.status}}</li> --}}
                     </ul>
                 <div class="container-img">
                     <img src="{{product.thumbnail}}" alt="{{product.title}}" class="card-img">
                 </div>
+                {{#unless (eq product.owner email)}}
                 <div class="btn-container">
-                <button class="agregar-btn" type="submit" id="add-btn" onclick="agregarAlCarrito('{{product._id}}', '{{userCart}}')" value="{{product._id}}">Agregar al carrito</button>
+                    <button class="agregar-btn" type="submit" id="add-btn" onclick="agregarAlCarrito('{{product._id}}', '{{userCart}}')" value="{{product._id}}">Agregar al carrito</button>
                 </div>
+                {{/unless}}
                 </div>
             </div>
         </div>

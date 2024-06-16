@@ -6,10 +6,17 @@
     {{#if isUser}}
     <li><a href="/products">Productos</a></li>
     <li><a href="/cart"><i class="bi bi-cart cart"></i>Cart <span class="numerito">{{totalQuantity}}</span></a></li>
+    <li><a href="/rol">Cambiar rol</a></li>
+    {{/if}}
+    {{#if isPremium}}
+    <li><a href="/products">Productos</a></li>
+    <li><a href="/cart"><i class="bi bi-cart cart"></i>Cart <span class="numerito">{{totalQuantity}}</span></a></li>
+    <li><a href="/rol">Cambiar rol</a></li>
+    <li><a href="/premium">Vende tus productos</a></li>
     {{/if}}
     <li><a href="/user">Usuario</a></li>
     <div class="user">
-        <li class="username">Bienvenido: <strong>{{usuario.username}}</strong></li>
+        <li class="username">Bienvenido: <strong>{{username}}</strong></li>
         <li><a href="#" onclick="logout()">Logout</a></li>
     </div>
 </ul>

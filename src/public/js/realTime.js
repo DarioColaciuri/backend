@@ -6,13 +6,10 @@ socketClient.on("enviodeproducts",(obj)=>{
 
 
 function updateProductList(productList) {
- 
-    const productsDiv  = document.getElementById('list-products')
-
+     const productsDiv  = document.getElementById('list-products')
     let productosHTML = "";
   
     productList.forEach((product) => {
-      // const thumbnailUrl = product.thumbnails.length > 0 ? product.thumbnails[0].url : 'https://img.freepik.com/vector-gratis/ilustracion-icono-galeria_53876-27002.jpg';
         productosHTML += `
           <div class="card">
             <div class="card-header-code">code: ${product.code}</div>
@@ -26,6 +23,7 @@ function updateProductList(productList) {
                       <li>category: ${product.category}</li>
                       <li>status: ${product.status}</li>
                       <li>stock: ${product.stock}</li>
+                      <li>Owner: ${product.owner}</li>
                     </ul>
                     <div class="img-container">
                       <img class="card-img" src="${product.thumbnail}" alt="${product.title}">

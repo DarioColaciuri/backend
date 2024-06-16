@@ -1,6 +1,7 @@
 import { routes } from "../utils.js";
 import { productsModel } from '../dao/models/products.model.js';
 import { productRepository } from "../services/service.js"
+import { usersModel } from "../dao/models/users.model.js";
 const rutaProductos = routes.products;
 
 
@@ -74,6 +75,13 @@ export const getProductById = async (req, res) => {
 export const addProduct = async (req, res) => {
     try {
         const newProduct = req.body;
+        let usuario = await usersModel.findOne({ email: req.user.email });
+        let owner = usuario.email;
+
+        if (usuario.rol === "premium") {
+            newProduct.owner = owner;
+        }
+
         await productRepository.addProduct(newProduct);
         res.status(201).json({ message: "Producto creado correctamente" });
     } catch (error) {

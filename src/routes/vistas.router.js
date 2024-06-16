@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { auth, admin, users } from '../middlewares/auth.js';
-import { cart, getProducts, getCarts, getCartById, getProductById, realTimeProducts, chat, register, login, user, mock, forgotPassword, resetPassword} from "../controllers/vistas.controller.js"
+import { cart, getProducts, getCarts, getCartById, getProductById, realTimeProducts, chat, register, login, user, mock, forgotPassword, resetPassword, rol, premium} from "../controllers/vistas.controller.js"
 
 
 const vistasRouter = Router()
@@ -18,5 +18,7 @@ vistasRouter.get('/user', auth, user)
 vistasRouter.get('/mockingproducts', mock)
 vistasRouter.get("/forgotpassword", forgotPassword)
 vistasRouter.get("/resetpassword", resetPassword)
+vistasRouter.get("/rol", rol)
+vistasRouter.get("/premium", premium)
 
 export default vistasRouter
