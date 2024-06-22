@@ -17,11 +17,11 @@ import { purchase } from "../controllers/ticket.controller.js";
 cartRouter.get("/", getCarts);
 cartRouter.post("/", createCart);
 cartRouter.get("/:cid", getCartById);
+cartRouter.put("/:cid", updateCart);
+cartRouter.delete("/:cid", emptyCart);
 cartRouter.post("/:cid/product/:pid", addProductToCart);
 cartRouter.delete('/:cid/product/:pid', deleteProductFromCart);
-cartRouter.put("/:cid", updateCart);
 cartRouter.put("/:cid/product/:pid", updateProductQuantity);
-cartRouter.delete("/:cid", emptyCart);
 cartRouter.post("/:cid/purchase", purchase);
 
 cartRouter.use(errorHandler);

@@ -5,7 +5,7 @@ import EErrors from "../services/errors/errors-enum.js";
 
 export const getCarts = async (req, res) => {
     try {
-        res.json({ carts: await CartManager.getCarts() });
+        res.json({ carts: await cartRepository.getCarts() });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

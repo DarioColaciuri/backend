@@ -18,6 +18,8 @@ import { config } from "../src/config/config.js"
 import { addLogger, loggerDev } from "./config/logger.js"
 import loggerRouter from './routes/loggers.router.js';
 import usersRouter from './routes/users.router.js';
+import swaggerJSDoc from 'swagger-jsdoc';
+import swaggerUIExpress from 'swagger-ui-express';
 
 const PORT = config.PORT;
 const app = express();
@@ -46,7 +48,7 @@ app.use(session(
 
 initializePassport();
 app.use(passport.initialize())
-app.use(passport.session()) 
+app.use(passport.session())
 app.use(express.static(path.join(__dirname, '/public')));
 
 
@@ -56,6 +58,20 @@ app.use("/api/sessions", sessionsRouter)
 app.use("/", vistasRouter)
 app.use("/loggerTest", loggerRouter)
 app.use("/api/users", usersRouter)
+
+const swaggerOptions = {
+    definition: {
+        openapi: "3.0.1",
+        info: {
+            title: "Documentacion",
+            description: "Documentacion de la API",
+        }
+    },
+    apis: [`./src/docs/*.yaml`]
+}
+
+const specs = swaggerJSDoc(swaggerOptions)
+app.use('/apidocs', swaggerUIExpress.serve, swaggerUIExpress.setup(specs))
 
 
 
