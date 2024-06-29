@@ -75,8 +75,11 @@ export const getProductById = async (req, res) => {
 export const addProduct = async (req, res) => {
     try {
         const newProduct = req.body;
-        let usuario = await usersModel.findOne({ email: req.user.email });
+        const email = req?.user?.email || newProduct.email
+        let usuario = await usersModel.findOne({ email: email });
+        console.log(usuario)
         let owner = usuario.email;
+
 
         if (usuario.rol === "premium") {
             newProduct.owner = owner;
