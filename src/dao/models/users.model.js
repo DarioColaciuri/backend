@@ -17,6 +17,11 @@ export const usersModel = mongoose.model('users', new mongoose.Schema({
         enum: ['admin', 'user', 'premium'],
         default: 'user'
     },
+    documents: [{
+        name: String,
+        reference: String,
+    }],
+    last_connection: Date
     // {
     //     timestamps: true, strict: false
     // }

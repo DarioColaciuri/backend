@@ -39,6 +39,16 @@ i {
     color: #fff; 
 }
 
+.upload_form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+    padding: 2rem;
+    background-color: #858585;
+    border-radius: 2rem;
+    gap: 1rem;
+}
+
 .titulo {
     font-family: "Kanit", sans-serif;
     text-align: center;

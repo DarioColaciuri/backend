@@ -5,6 +5,18 @@
         <h1>{{uid}}</h1>
         <input class="submit" type="submit" value="Cambiar rol" id="submit" />
     </form>
+    <form action="/api/users/{{uid}}/documents" method="POST" enctype="multipart/form-data" class="upload_form">
+        <label for="identificacion">Identificación:</label>
+        <input type="file" name="identificacion" id="identificacion" required>
+
+        <label for="comprobanteDomicilio">Comprobante de Domicilio:</label>
+        <input type="file" name="comprobanteDomicilio" id="comprobanteDomicilio" required>
+
+        <label for="comprobanteEstadoCuenta">Comprobante de Estado de Cuenta:</label>
+        <input type="file" name="comprobanteEstadoCuenta" id="comprobanteEstadoCuenta" required>
+
+        <input type="submit" value="Subir Archivos">
+    </form>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>

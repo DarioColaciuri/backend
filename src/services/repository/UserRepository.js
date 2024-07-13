@@ -10,6 +10,18 @@ class UserRepository {
     getBy = (filtro) => {
         return this.UserRepository.getBy(filtro);
     }
+
+    updateLastConnection = (uid) => {
+        return this.UserRepository.updateLastConnection(uid);
+    }
+
+    deleteInactiveUsers = () => {
+        return this.UserRepository.deleteInactiveUsers();
+    }
+
+    updateDocuments = (uid, documents) => {
+        return this.UserRepository.updateDocuments(uid, documents);
+    }
 }
 
 export default UserRepository;

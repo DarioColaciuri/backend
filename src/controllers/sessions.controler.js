@@ -8,8 +8,6 @@ import jwt from "jsonwebtoken"
 import { enviarMail } from '../config/mailer.js';
 import bcrypt from 'bcrypt';
 
-
-
 export const register = async (req, res) => {
 
     let { username, email, password } = req.body
@@ -55,6 +53,7 @@ export const login = async (req, res) => {
     usuario = { ...usuario }
     delete usuario.password
     req.session.usuario = usuario
+    userRepository.updateLastConnection(usuario._id)
 
     res.setHeader('Content-Type', 'application/json')
     res.status(200).json({
@@ -68,6 +67,7 @@ export const failLogin = async (req, res) => {
 }
 
 export const logout = (req, res) => {
+    userRepository.updateLastConnection(req.session.usuario._id)
     req.session.destroy(e => {
         if (e) {
             res.setHeader('Content-Type', 'application/json');
