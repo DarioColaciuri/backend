@@ -17,6 +17,10 @@ class TicketRepository {
     updateStock = (products) => {
         return this.ticketManager.updateStock(products);
     }
+
+    getLatestTicketByUser = (userId) => {
+        return this.ticketManager.getLatestTicketByUser(userId);
+    }
 }
 
 export default TicketRepository;

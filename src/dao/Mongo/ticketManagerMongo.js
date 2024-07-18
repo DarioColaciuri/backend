@@ -79,6 +79,18 @@ class TicketManager {
         }
     }
 
+    async getLatestTicketByUser(userId) {
+        try {
+            const latestTicket = await ticketsModel.findOne({ purchaser: userId })
+                .sort({ createdAt: -1 })
+                .lean();
+            return latestTicket;
+        } catch (error) {
+            console.error("Error al obtener el último ticket del usuario:", error);
+            throw error;
+        }
+    }
+
     async getTicketsByUser(userId) {
         try {
             const user = await usersModel.findById(userId);
@@ -88,7 +100,7 @@ class TicketManager {
             const tickets = await ticketsModel.find({ purchaser: user.email });
             return tickets;
         } catch (error) {
-            req.logger.error("Error al obtener los tickets:", error);
+            console.error("Error al obtener los tickets:", error);
             throw error;
         }
     }
@@ -101,5 +113,6 @@ class TicketManager {
         }, 0);
     }
 }
+
 
 export default TicketManager;

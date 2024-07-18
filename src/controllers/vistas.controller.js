@@ -1,4 +1,4 @@
-import { productRepository } from '../services/service.js';
+import { productRepository, ticketRepository } from '../services/service.js';
 import { productsModel } from '../dao/models/products.model.js';
 import cartModel from '../dao/models/carts.model.js';
 import __dirname from "../utils.js"
@@ -6,6 +6,7 @@ import { generateMockProducts } from '../mocks/mock.js';
 import CustomError from '../services/errors/CustomError.js';
 import EErrors from '../services/errors/errors-enum.js';
 import { usersModel } from '../dao/models/users.model.js';
+
 
 export const getProducts = async (req, res) => {
     let { pagina, limit, query, sort } = req.query;
@@ -85,11 +86,18 @@ export const getProducts = async (req, res) => {
 
 export const getCarts = async (req, res) => {
     try {
-        let usuario = req.session.usuario
+        let datoUsuario = req.session.usuario._id
+        let usuario = await usersModel.findById(datoUsuario)
+        const isUser = usuario.rol === "user"
+        const isPremium = usuario.rol === "premium"
+        const cartId = req.session.usuario.cart;
+        const rol = usuario.rol
+        const username = usuario.username
+        const email = usuario.email
         const isAdmin = usuario.rol === 'admin';
         const carts = await cartModel.find().populate('products.product', '_id title price description category code stock thumbnail').lean();
         res.setHeader("Content-Type", "text/html");
-        res.status(200).render("carts", { carts, usuario, isAdmin });
+        res.status(200).render("carts", { carts, usuario, isAdmin, isUser, isPremium, cartId, rol, username, email });
 
     } catch (error) {
         req.logger.error(error);
@@ -153,13 +161,18 @@ export const login = (req, res) => {
 }
 
 export const cart = async (req, res) => {
-    let usuario = req.session.usuario;
+    let datoUsuario = req.session.usuario._id
+    let usuario = await usersModel.findById(datoUsuario)
     const isAdmin = usuario.rol === 'admin';
-    const isUser = usuario.rol === "user";
+    const isUser = usuario.rol === "user"
+    const isPremium = usuario.rol === "premium"
     const cartId = req.session.usuario.cart;
+    const rol = usuario.rol
+    const username = usuario.username
+    const email = usuario.email
     const userCart = await cartModel.findById(cartId).populate('products.product', '_id title price description category code stock thumbnail').lean();
     const totalQuantity = userCart.products.reduce((acc, item) => acc + item.quantity, 0);
-    res.status(200).render('cart', { totalQuantity, userCart, usuario, isAdmin, isUser });
+    res.status(200).render('cart', { totalQuantity, userCart, usuario, isAdmin, isUser, isPremium, cartId, rol, username, email });
 }
 
 export const user = async (req, res) => {
@@ -215,3 +228,29 @@ export const premium = async (req, res) => {
     const productos = await productsModel.find({ owner: email }).lean();
     res.status(200).render('premium', { usuario, productos, rol, uid, isAdmin, isUser, isPremium})
 }
+
+export const adminUsers = async (req, res) => {
+    try {
+        const users = await usersModel.find().lean();  
+        res.render("adminUsers", { users }); 
+    } catch (error) {
+        loggerDev.error("Error al obtener los usuarios", error);
+        res.status(500).send("Error interno del servidor");
+    }
+};
+
+export const details = async (req, res) => {
+    try {
+        const userId = req.user._id;
+        const latestTicket = await ticketRepository.getLatestTicketByUser(userId);
+
+        if (latestTicket) {
+            res.render('details', { ticket: latestTicket, user: req.user });
+        } else {
+            res.status(404).send('No se encontró ningún ticket para este usuario.');
+        }
+    } catch (error) {
+        req.logger.error('Error al obtener los detalles del último ticket:', error);
+        res.status(500).send('Error interno del servidor');
+    }
+};

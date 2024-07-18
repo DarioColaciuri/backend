@@ -1,5 +1,5 @@
 function buyCart(userCart) {
-    const port = window.location.port || 8080
+    const port = window.location.port || 8080;
     fetch(`http://localhost:${port}/api/carts/${userCart}/purchase`, {
         method: 'POST',
         headers: {
@@ -20,22 +20,7 @@ function buyCart(userCart) {
                 close: true
             }).showToast();
 
-            if (result.unavailableProducts && result.unavailableProducts.length > 0) {
-                const message = result.unavailableProducts.map(item => 
-                    `No se pudo comprar ${item.quantity} de ${item.product.title}. Cantidad comprada: ${item.product.stock}.`
-                ).join('\n');
-
-                Toastify({
-                    text: message,
-                    duration: 5000,
-                    className: "toast",
-                    style: {
-                        background: "linear-gradient(to right, #e36f6f, #c42626)",
-                        color: "#000000",
-                    },
-                    close: true
-                }).showToast();
-            }
+            window.location.href = `/details?ticketId=${result.ticket._id}`;
         } else {
             Toastify({
                 text: result.message || 'Hubo un error al comprar',
@@ -50,7 +35,7 @@ function buyCart(userCart) {
         }
     })
     .catch(error => {
-        req.logger.error('Error al comprar:', error);
+        console.error('Error al comprar:', error);
         Toastify({
             text: 'Error al comprar',
             duration: 3000,
@@ -63,5 +48,4 @@ function buyCart(userCart) {
         }).showToast();
     });
 }
-
 

@@ -2,6 +2,7 @@ import { routes } from "../utils.js";
 import { productsModel } from '../dao/models/products.model.js';
 import { productRepository } from "../services/service.js"
 import { usersModel } from "../dao/models/users.model.js";
+import { enviarMail } from "../config/mailer.js";
 const rutaProductos = routes.products;
 
 
@@ -77,7 +78,6 @@ export const addProduct = async (req, res) => {
         const newProduct = req.body;
         const email = req?.user?.email || newProduct.email
         let usuario = await usersModel.findOne({ email: email });
-        console.log(usuario)
         let owner = usuario.email;
 
 
@@ -108,10 +108,32 @@ export const updateProduct = async (req, res) => {
 export const deleteProduct = async (req, res) => {
     try {
         const productId = req.params.pid;
+        
+        const product = await productRepository.getProductById(productId);
+        if (!product) {
+            return res.status(404).json({ error: "Producto no encontrado" });
+        }
+        
+        const owner = await usersModel.findOne({ email: product.owner });
+        if (!owner) {
+            return res.status(404).json({ error: "Propietario del producto no encontrado" });
+        }
+        
+        if (owner.rol === "premium") {
+            const subject = "Producto eliminado";
+            const message = `
+                <p>Estimado ${owner.first__name},</p>
+                <p>Le informamos que su producto <strong>${product.title}</strong> ha sido eliminado de nuestra plataforma.</p>
+                <p>Saludos,</p>
+                <p>El equipo de E-commerce</p>
+            `;
+            await enviarMail(owner.email, subject, message);
+        }
+        
         await productRepository.deleteProduct(productId);
         res.json({ message: "Producto eliminado correctamente" });
     } catch (error) {
         req.logger.error(error);
-        res.status(404).json({ error: error.message });
+        res.status(500).json({ error: error.message });
     }
-}
+};

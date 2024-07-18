@@ -1,5 +1,4 @@
 {{> navbar}}
-<h1>Carrito de Usuario</h1>
 <div class="products-container">
 {{#if userCart.products.length}}
   {{#each userCart.products}}
@@ -14,6 +13,7 @@
       <p>Stock: {{this.product.stock}}</p>
       </div>
       <img class="product-img" src="{{this.product.thumbnail}}" alt="Imagen del producto">
+      <button class="delete-product" onclick="deleteProductFromCart('{{../userCart._id}}', '{{this.product._id}}')"><i class="bi bi-trash"></i></button>
     </div>
   {{/each}}
   <button id="buy" onclick="buyCart('{{userCart._id}}')">Comprar</button>
@@ -24,4 +24,5 @@
 
 
 <script src="/js/createTicket.js"></script>
+<script src="/js/home.js"></script>
 

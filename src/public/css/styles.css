@@ -453,6 +453,12 @@ a {
 
 .product {
     display: flex;
+    background-color: #858585;
+    border: solid 1px black;
+    border-radius: 2rem;
+    margin-top: 1rem;
+    padding: 2rem;
+    width: 40vw;
     flex-direction: column;
     text-align: center;
     align-items: center;
@@ -460,10 +466,22 @@ a {
 
 .product-img {
     width: 200px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.btn {
+    background-color: #181818;
+    padding: 1rem;
+    border-radius: 2rem;
 }
 
 .product-info {
     display: flex;
+    background-color: #7389AE;
+    border: solid 1px black;
+    border-radius: 2rem;
+    padding: 1rem;
     flex-direction: row;
     align-items: center;
     gap: 1rem;
@@ -472,7 +490,33 @@ a {
 .products-container {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 2rem;
+}
+
+.delete-product {
+    background-color: #416788;
+    color: white;
+    padding: 1rem;
+    border-radius: 2rem;
+    cursor: pointer;
+}
+
+.bi-trash {
+    color: white;
+}
+
+#buy {
+    background-color: rgb(79, 143, 79);
+    color: black;
+    padding: 1rem;
+    border-radius: 2rem;
+    cursor: pointer;
+    margin-bottom: 2rem;
+}
+
+#buy:hover {
+    background-color: rgb(0, 255, 0);
 }
 
 

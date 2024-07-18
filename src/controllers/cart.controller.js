@@ -51,7 +51,9 @@ export const addProductToCart = async (req, res, next) => {
     }
 
         const updateCart = await cartRepository.addProductToCart(cartId, productId, quantity);
-        res.json(updateCart.products);
+        const totalQuantity = updateCart.products.reduce((acc, item) => acc + item.quantity, 0);
+        // res.json(updateCart.products);
+        res.json({ products: updateCart.products, totalQuantity });
     } catch (error) {
         next(error);
     }
